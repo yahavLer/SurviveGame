@@ -8,6 +8,12 @@
 ## Introduction
 SurviveGame is a mobile game developed as part of a mobile security course, as part of a learning assignment that aimed to reverse engineer a given APK file. The project involved restoring missing components and fixing hidden bugs, until the application was fully operational. The goal of the game is to navigate through different stages using arrows and find your way back to your city. Upon starting the game, the player must enter a unique identifier (ID) that affects the course of the game and the stages are lengthy.
 ## Objective
+The assignment objective was to:
+- Decompile the original APK.
+- Restore all missing resources (layouts, images, strings).
+- Fix logic or structural bugs hidden in the code.
+- Understand and explain the internal gameplay mechanics.
+- Demonstrate a successful game execution, resulting in a valid city being reached.
 
 We were provided with an APK file of a mobile game called **SurviveGame**. The goal of the game is:
 
@@ -21,7 +27,11 @@ To win, the user must enter a valid 9-digit ID, and then press directional arrow
 ## Reverse Engineering Process
 
 ### APK Decompilation
-I used [JADX](https://github.com/skylot/jadx) and [javadecompilers.com](http://www.javadecompilers.com/apk) to analyze the original APK.
+To begin the reverse engineering process, I utilized:
+- [JADX](https://github.com/skylot/jadx) – for local analysis of source code
+- [javadecompilers.com](http://www.javadecompilers.com/apk) – for quick online preview of structure
+
+These tools allowed me to extract Java source files, layouts, and key resources for review.
 
 ### Code Structure Analysis
 I identified the following key components:
