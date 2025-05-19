@@ -20,28 +20,46 @@ To win, the user must enter a valid 9-digit ID, and then press directional arrow
 
 ## Reverse Engineering Process
 
-### 1. APK Decompilation
+### APK Decompilation
 I used [JADX](https://github.com/skylot/jadx) and [javadecompilers.com](http://www.javadecompilers.com/apk) to analyze the original APK.
 
-### 2. Code Structure Analysis
+### Code Structure Analysis
 I identified the following key components:
 
 - **Activities:**
-    - `Activity_Menu`: Entry screen with ID input.
-    - `Activity_Game`: Main gameplay logic and arrow navigation.
+    - `Activity_Menu`: Entry screen where the user inputs the ID number.
+    - `Activity_Game`: Handles the gameplay logic and arrow navigation.
 
 - **Resources Missing:**
     - Layouts: `activity_menu.xml`, `activity_game.xml`
     - Icons & drawables
     - String values (especially URL string)
 
-- **Manifest:**
-    - Package: `com.example.survivegame`
-    - `android:exported` attribute was missing in main activity
-    - Invalid `android:platformBuildVersionCode` & `android:platformBuildVersionName` were removed
-    - Original `targetSdkVersion` was 30 → updated to 33 for compatibility
+- **Manifest File (`AndroidManifest.xml`):**
+    - **Package name**: `com.example.survivegame`
+    - **Permissions**: Required `android.permission.INTERNET`
+    - **Activities**:
+        - `Activity_Menu`: Launcher activity.
+        - `Activity_Game`: Declared with portrait orientation.
+    - Issues:
+        - Missing `android:exported="true"` attribute in launcher activity.
+        - Invalid auto-generated attributes such as `android:platformBuildVersionCode` and `platformBuildVersionName` were present and removed.
 
-### 3. Logic Analysis
+- **SDK Versions:**
+    - `minSdkVersion`: 24
+    - `targetSdkVersion`: originally 30 → updated to 34 for build compatibility.
+---
+
+### Resource Inspection
+
+I examined the following directories and reconstructed missing assets:
+
+- `res/layout`: Rebuilt `activity_menu.xml` and `activity_game.xml` layout files.
+- `res/drawable`: Re-added image assets for navigation arrows.
+- `res/values`: Reconstructed strings (`strings.xml`), styles, and colors. Restored the URL used to fetch the list of cities.
+
+---
+### Logic Analysis
 - The ID must be **9 digits** long.
 - Each digit is parsed and transformed into a direction:
 
